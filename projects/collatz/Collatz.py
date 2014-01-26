@@ -38,10 +38,9 @@ def collatz_eval ((i, j)) :
         while x != 1 :
             if x%2 == 0 :
                 x = x/2
-                count += 1
             else :
-                x = x + (x >> 1) + 1
-                count += 2
+                x = 3*x + 1
+            count += 1
         if count > max_cycle_length :
             max_cycle_length = count
     v = max_cycle_length
