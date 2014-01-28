@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # ---------------------------
 # projects/collatz/Collatz.py
@@ -10,54 +10,49 @@
 # collatz_read
 # ------------
 
-def collatz_read (r) :
+def collatz_read (r, a) :
     """
+    reads two ints into a[0] and a[1]
     r is a  reader
-    returns an generator that iterates over a sequence of lists of ints of length 2
-    for s in r :
-        l = s.split()
-        b = int(l[0])
-        e = int(l[1])
-        yield [b, e]
+    a is an array of int
+    return true if that succeeds, false otherwise
     """
-    return (map(int, s.split()) for s in r)
+    s = r.readline()
+    if s == "" :
+        return False
+    l = s.split()
+    a[0] = int(l[0])
+    a[1] = int(l[1])
+    return True
 
 # ------------
 # collatz_eval
 # ------------
 
-def collatz_eval ((i, j)) :
+def collatz_eval (i, j) :
     """
     i is the beginning of the range, inclusive
     j is the end       of the range, inclusive
     return the max cycle length in the range [i, j]
     """
-    max_cycle_length = 1
-    for x in range(i, j+1) :
-        count = 1
-        while x != 1 :
-            if x%2 == 0 :
-                x = x/2
-            else :
-                x = 3*x + 1
-            count += 1
-        if count > max_cycle_length :
-            max_cycle_length = count
-    v = max_cycle_length
-    assert v > 0
+    assert(i > 0)
+    assert(j > 0)
+    # <your code>
+    v = 1
+    assert(v > 0)
     return v
 
 # -------------
 # collatz_print
 # -------------
 
-def collatz_print (w, (i, j), v) :
+def collatz_print (w, i, j, v) :
     """
     prints the values of i, j, and v
     w is a writer
-    v is the max cycle length
     i is the beginning of the range, inclusive
     j is the end       of the range, inclusive
+    v is the max cycle length
     """
     w.write(str(i) + " " + str(j) + " " + str(v) + "\n")
 
@@ -71,6 +66,8 @@ def collatz_solve (r, w) :
     r is a reader
     w is a writer
     """
-    for t in collatz_read(r) :
-        v = collatz_eval(t)
-        collatz_print(w, t, v)
+    a = [0, 0]
+    while collatz_read(r, a) :
+        i, j = a
+        v = collatz_eval(i, j)
+        collatz_print(w, i, j, v)
